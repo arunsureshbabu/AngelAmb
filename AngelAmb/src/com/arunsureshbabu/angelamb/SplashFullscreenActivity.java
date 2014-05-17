@@ -1,15 +1,16 @@
 package com.arunsureshbabu.angelamb;
 
-import com.arunsureshbabu.angelamb.util.SystemUiHider;
-
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
+
+import com.arunsureshbabu.angelamb.util.SystemUiHider;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -18,8 +19,9 @@ import android.view.View;
  * @see SystemUiHider
  */
 public class SplashFullscreenActivity extends Activity {
+	SharedPreferences prefs = null;
 	// Static Splash screen timer
-    private static int Splash_TimeOut_MilliSec = 3000;
+	private static int Splash_TimeOut_MilliSec = 3000;
 	/**
 	 * Whether or not the system UI should be auto-hidden after
 	 * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
@@ -53,20 +55,19 @@ public class SplashFullscreenActivity extends Activity {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_splash_fullscreen);
-		
-		//Static Splash Screen Load the main page after Splash_TimeOut.
-		new Handler().postDelayed(new Runnable() {
-			
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				//The mian avtivity is launced after the timer is finished.
-				Intent i = new Intent(SplashFullscreenActivity.this, MainActivity.class);
-				startActivity(i);
-				//Close this Activity.
-				finish();
-			}
-		}, Splash_TimeOut_MilliSec);
+
+		prefs = getSharedPreferences("com.mycompany.myAppName", MODE_PRIVATE);
+
+		// Static Splash Screen Load the main page after Splash_TimeOut.
+		/*
+		 * new Handler().postDelayed(new Runnable() {
+		 * 
+		 * @Override public void run() { // TODO Auto-generated method stub //
+		 * The mian avtivity is launced after the timer is finished. Intent i =
+		 * new Intent(SplashFullscreenActivity.this, MainActivity.class);
+		 * startActivity(i); // Close this Activity. finish(); } },
+		 * Splash_TimeOut_MilliSec);
+		 */
 
 		final View controlsView = findViewById(R.id.fullscreen_content_controls);
 		final View contentView = findViewById(R.id.fullscreen_content);
@@ -133,6 +134,96 @@ public class SplashFullscreenActivity extends Activity {
 		// while interacting with the UI.
 		findViewById(R.id.dummy_button).setOnTouchListener(
 				mDelayHideTouchListener);
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+
+		if (prefs.getBoolean("firstrun", true)) {
+			// Do first run stuff here then set 'firstrun' as false
+			new Handler().postDelayed(new Runnable() {
+
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					// The mian avtivity is launced after the timer is finished.
+					Intent i = new Intent(SplashFullscreenActivity.this,
+							RegistrationActivity.class);
+					startActivity(i);
+					System.out.println("FirstRun");
+					// Close this Activity.
+					finish();
+				}
+			}, Splash_TimeOut_MilliSec);
+			// using the following line to edit/commit prefs
+			prefs.edit().putBoolean("firstrun", false).commit();
+		} else if (prefs.getBoolean("isGeneralUser", false)) {
+			new Handler().postDelayed(new Runnable() {
+
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					// The mian avtivity is launced after the timer is finished.
+					Intent i = new Intent(SplashFullscreenActivity.this,
+							GeneralUserActivity.class);
+					startActivity(i);
+					System.out.println("General User");
+					// Close this Activity.
+					finish();
+				}
+			}, Splash_TimeOut_MilliSec);
+		} else if (prefs.getBoolean("isEmergencyCrew", false)) {
+			// Do first run stuff here then set 'firstrun' as false
+			new Handler().postDelayed(new Runnable() {
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					// The mian avtivity is launced after the timer is finished.
+					Intent i = new Intent(SplashFullscreenActivity.this,
+							EmergencyCrewActivity.class);
+					startActivity(i);
+					System.out.println("Emergency Crew");
+					// Close this Activity.
+					finish();
+				}
+			}, Splash_TimeOut_MilliSec);
+		} else if (prefs.getBoolean("isDoctor", false)) {
+			// Do first run stuff here then set 'firstrun' as false
+			new Handler().postDelayed(new Runnable() {
+
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					// The mian avtivity is launced after the timer is finished.
+					Intent i = new Intent(SplashFullscreenActivity.this,
+							DoctorActivity.class);
+					startActivity(i);
+					System.out.println("Doctor");
+					// Close this Activity.
+					finish();
+				}
+			}, Splash_TimeOut_MilliSec);
+		} else {
+			new Handler().postDelayed(new Runnable() {
+
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					// The mian avtivity is launced after the timer is finished.
+					/*
+					 * Intent i = new Intent(SplashFullscreenActivity.this,
+					 * MainActivity.class);
+					 */
+					Intent i = new Intent(SplashFullscreenActivity.this,
+							RegistrationActivity.class);
+					startActivity(i);
+					System.out.println("Else");
+					// Close this Activity.
+					finish();
+				}
+			}, Splash_TimeOut_MilliSec);
+		}
 	}
 
 	@Override
