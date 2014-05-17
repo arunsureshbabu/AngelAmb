@@ -1,27 +1,42 @@
 package com.arunsureshbabu.angelamb;
 
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.os.Build;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 public class RegistrationActivity extends ActionBarActivity {
+
+	EditText username;
+	Button submit;
+	Button reset;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_registration);
 
+		addListenerOnButton();
+
 		if (savedInstanceState == null) {
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
+	}
+
+	private void addListenerOnButton() {
+		submit = (Button) findViewById(R.id.Submit_button);
+		reset = (Button) findViewById(R.id.Reset_button);
+		username = (EditText) findViewById(R.id.Username_editText);
+		System.out.println("Fine");
 	}
 
 	@Override

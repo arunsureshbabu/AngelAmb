@@ -9,8 +9,143 @@
     tools:context="com.arunsureshbabu.angelamb.RegistrationActivity$PlaceholderFragment" >
 
     <TextView
+        android:id="@+id/RegLabel_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/registration_Label" />
+
+    <EditText
+        android:id="@+id/Username_editText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/RegLabel_textView"
+        android:layout_toRightOf="@+id/RegLabel_textView"
+        android:ems="10"
+        android:hint="Enter Username" >
+
+        <requestFocus />
+    </EditText>
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/Username_editText"
+        android:layout_alignBottom="@+id/Username_editText"
+        android:layout_alignLeft="@+id/RegLabel_textView"
+        android:text="@string/reg_usernameLabel" />
+
+    <TextView
+        android:id="@+id/ConfirmPasswordLabel_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/PasswordLabel_textView"
+        android:layout_below="@+id/Password_editText"
+        android:layout_marginTop="14dp"
+        android:layout_toLeftOf="@+id/Password_editText"
+        android:text="@string/reg_ConfirmPassword" />
+
+    <EditText
+        android:id="@+id/confirmPassord_editText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/ConfirmPasswordLabel_textView"
+        android:layout_toRightOf="@+id/ConfirmPasswordLabel_textView"
+        android:ems="10"
+        android:hint="Confirm Password"
+        android:inputType="textPassword" />
+
+    <EditText
+        android:id="@+id/Password_editText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/PasswordLabel_textView"
+        android:layout_alignBottom="@+id/PasswordLabel_textView"
+        android:layout_alignLeft="@+id/Username_editText"
+        android:ems="10"
+        android:hint="Enter Password"
+        android:inputType="textPassword" />
+
+    <TextView
+        android:id="@+id/PasswordLabel_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/textView1"
+        android:layout_below="@+id/Username_editText"
+        android:layout_marginTop="15dp"
+        android:text="@string/reg_PasswordLabel" />
+
+    <Spinner
+        android:id="@+id/userType_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/confirmPassord_editText"
+        android:layout_alignTop="@+id/UserTypeLabel_textView"
+        android:entries="@array/userTypeArray" />
+
+    <TextView
+        android:id="@+id/UserTypeLabel_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/ConfirmPasswordLabel_textView"
+        android:layout_below="@+id/confirmPassord_editText"
+        android:layout_marginTop="19dp"
+        android:text="@string/reg_UserType" />
+
+    <Button
+        android:id="@+id/Reset_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/Submit_button"
+        android:layout_alignBottom="@+id/Submit_button"
+        android:layout_alignLeft="@+id/UserTypeLabel_textView"
+        android:text="Reset" />
+
+    <Button
+        android:id="@+id/Submit_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="18dp"
+        android:text="Submit" />
+
+    <EditText
+        android:id="@+id/Email_editText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/userType_spinner"
+        android:layout_toRightOf="@+id/UserTypeLabel_textView"
+        android:ems="10"
+        android:hint="Enter Email Address"
+        android:inputType="textEmailAddress" />
+
+    <TextView
+        android:id="@+id/EmailLabel_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/Email_editText"
+        android:layout_alignBottom="@+id/Email_editText"
+        android:layout_alignLeft="@+id/UserTypeLabel_textView"
+        android:text="@string/reg_EmailLabel" />
+
+    <EditText
+        android:id="@+id/PhoneNum_editText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/userType_spinner"
+        android:layout_alignTop="@+id/PhoneNumLabel_textView"
+        android:ems="10"
+        android:hint="Phone Number"
+        android:inputType="phone" />
+
+    <TextView
+        android:id="@+id/PhoneNumLabel_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/PasswordLabel_textView"
+        android:layout_below="@+id/Email_editText"
+        android:layout_marginTop="15dp"
+        android:text="@string/reg_PhoneLabel" />
 
 </RelativeLayout>
