@@ -148,8 +148,10 @@ public class SplashFullscreenActivity extends Activity {
 				public void run() {
 					// TODO Auto-generated method stub
 					// The mian avtivity is launced after the timer is finished.
+					/*Intent i = new Intent(SplashFullscreenActivity.this,
+							RegistrationActivity.class);*/
 					Intent i = new Intent(SplashFullscreenActivity.this,
-							RegistrationActivity.class);
+							GeneralUserActivity.class);
 					startActivity(i);
 					System.out.println("FirstRun");
 					// Close this Activity.
@@ -216,7 +218,7 @@ public class SplashFullscreenActivity extends Activity {
 					 * MainActivity.class);
 					 */
 					Intent i = new Intent(SplashFullscreenActivity.this,
-							RegistrationActivity.class);
+							GeneralUserActivity.class);
 					startActivity(i);
 					System.out.println("Else");
 					// Close this Activity.

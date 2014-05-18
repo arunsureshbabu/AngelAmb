@@ -12,5 +12,38 @@
         android:id="@+id/section_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/Label_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/OthersEmergency_button"
+        android:layout_alignLeft="@+id/map"
+        android:text="Emergency For :" />
+
+    <Button
+        android:id="@+id/MeEmergency_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/map"
+        android:layout_below="@+id/Label_textView"
+        android:layout_marginRight="51dp"
+        android:onClick="EmergencyMe"
+        android:text="Me" />
+
+    <Button
+        android:id="@+id/OthersEmergency_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/map"
+        android:layout_marginRight="15dp"
+        android:layout_toLeftOf="@+id/MeEmergency_button"
+        android:onClick="EmergencyOthers"
+        android:text="Others" />
 
 </RelativeLayout>

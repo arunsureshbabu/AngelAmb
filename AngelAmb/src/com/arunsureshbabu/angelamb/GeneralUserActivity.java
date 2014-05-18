@@ -1,25 +1,44 @@
 package com.arunsureshbabu.angelamb;
 
 import android.app.Activity;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.content.Context;
-import android.os.Build;
-import android.os.Bundle;
-import android.view.Gravity;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.support.v4.widget.DrawerLayout;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 public class GeneralUserActivity extends ActionBarActivity implements
-		NavigationDrawerFragment.NavigationDrawerCallbacks {
+		NavigationDrawerFragment.NavigationDrawerCallbacks, LocationListener {
+
+	private LocationManager locationManager;
+	private String provider;
+	private Double Lati, Longi;
 
 	/**
 	 * Fragment managing the behaviors, interactions and presentation of the
@@ -33,6 +52,8 @@ public class GeneralUserActivity extends ActionBarActivity implements
 	 */
 	private CharSequence mTitle;
 
+	private GoogleMap map;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -45,6 +66,61 @@ public class GeneralUserActivity extends ActionBarActivity implements
 		// Set up the drawer.
 		mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
 				(DrawerLayout) findViewById(R.id.drawer_layout));
+
+		LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
+		boolean enabled = service
+				.isProviderEnabled(LocationManager.GPS_PROVIDER);
+
+		// check if enabled and if not send user to the GSP settings
+		// Better solution would be to display a dialog and suggesting to
+		// go to the settings
+		if (!enabled) {
+			Builder builder = new AlertDialog.Builder(this);
+			builder.setMessage("Please Enable GPS to continue.");
+			builder.setCancelable(false);
+			builder.setPositiveButton("Ok",
+					new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int id) {
+							Intent intent = new Intent(
+									Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+							startActivity(intent);
+						}
+					});
+			AlertDialog dialog = builder.create();
+			dialog.show();
+		}
+		//map = ((SupportMapFragment) getSupportFragmentManager()
+				//.findFragmentById(R.id.map)).getMap();
+		// Get the location manager
+		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+		// Define the criteria how to select the locatioin provider -> use
+		// default
+		Criteria criteria = new Criteria();
+		provider = locationManager.getBestProvider(criteria, false);
+		Location location = locationManager.getLastKnownLocation(provider);
+		// Initialize the location fields
+		if (location != null) {
+			System.out.println("Provider " + provider + " has been selected.");
+			onLocationChanged(location);
+		} else {
+			Toast.makeText(getBaseContext(), "Location not available.",
+					Toast.LENGTH_SHORT).show();
+		}
+
+	}
+
+	/* Request updates at startup */
+	@Override
+	protected void onResume() {
+		super.onResume();
+		locationManager.requestLocationUpdates(provider, 400, 1, this);
+	}
+
+	/* Remove the locationlistener updates when Activity is paused */
+	@Override
+	protected void onPause() {
+		super.onPause();
+		locationManager.removeUpdates(this);
 	}
 
 	@Override
@@ -60,13 +136,13 @@ public class GeneralUserActivity extends ActionBarActivity implements
 	public void onSectionAttached(int number) {
 		switch (number) {
 		case 1:
-			//mTitle = getString(R.string.title_section1);
+			// mTitle = getString(R.string.title_section1);
 			break;
 		case 2:
-			//mTitle = getString(R.string.title_section2);
+			// mTitle = getString(R.string.title_section2);
 			break;
 		case 3:
-			//mTitle = getString(R.string.title_section3);
+			// mTitle = getString(R.string.title_section3);
 			break;
 		}
 	}
@@ -136,6 +212,12 @@ public class GeneralUserActivity extends ActionBarActivity implements
 					.findViewById(R.id.section_label);
 			textView.setText(Integer.toString(getArguments().getInt(
 					ARG_SECTION_NUMBER)));
+			/*
+			 * switch (getArguments().getInt(ARG_SECTION_NUMBER)) { case 1:
+			 * map.setMapType(GoogleMap.MAP_TYPE_HYBRID); break; case 2:
+			 * map.setMapType(GoogleMap.MAP_TYPE_SATELLITE); break; default:
+			 * map.setMapType(GoogleMap.MAP_TYPE_NORMAL); break; }
+			 */
 			return rootView;
 		}
 
@@ -145,6 +227,57 @@ public class GeneralUserActivity extends ActionBarActivity implements
 			((GeneralUserActivity) activity).onSectionAttached(getArguments()
 					.getInt(ARG_SECTION_NUMBER));
 		}
+	}
+
+	public void EmergencyMe(View v) {
+		Toast.makeText(getBaseContext(), "Contacting Emergency Service.",
+				Toast.LENGTH_SHORT).show();
+
+	}
+
+	public void EmergencyOthers(View v) {
+		Toast.makeText(getBaseContext(), "Contacting Emergency Service.",
+				Toast.LENGTH_SHORT).show();
+	}
+
+	@Override
+	public void onLocationChanged(Location location) {
+		// TODO Auto-generated method stub
+		int lat = (int) (location.getLatitude());
+		int lng = (int) (location.getLongitude());
+		Lati = location.getLatitude();
+		Longi = location.getLongitude();
+		if (map != null) {
+			Marker marker = map.addMarker(new MarkerOptions()
+					.position(new LatLng(Lati, Longi))
+					.title("Current Position")
+					.icon(BitmapDescriptorFactory
+							.fromResource(R.drawable.ic_launcher)));
+			map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Lati,
+					Longi), 15));
+			map.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
+		}
+		// Here the Server Call to Update location should come
+	}
+
+	@Override
+	public void onStatusChanged(String provider, int status, Bundle extras) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onProviderEnabled(String provider) {
+		// TODO Auto-generated method stub
+		Toast.makeText(this, "Enabled new provider " + provider,
+				Toast.LENGTH_SHORT).show();
+	}
+
+	@Override
+	public void onProviderDisabled(String provider) {
+		// TODO Auto-generated method stub
+		Toast.makeText(this, "Disabled provider " + provider,
+				Toast.LENGTH_SHORT).show();
 	}
 
 }
