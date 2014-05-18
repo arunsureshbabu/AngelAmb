@@ -27,7 +27,7 @@
     </EditText>
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/Username_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/Username_editText"
@@ -41,7 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/PasswordLabel_textView"
         android:layout_below="@+id/Password_editText"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="10dp"
         android:layout_toLeftOf="@+id/Password_editText"
         android:text="@string/reg_ConfirmPassword" />
 
@@ -70,9 +70,9 @@
         android:id="@+id/PasswordLabel_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/textView1"
+        android:layout_alignRight="@+id/Username_textView"
         android:layout_below="@+id/Username_editText"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         android:text="@string/reg_PasswordLabel" />
 
     <Spinner
@@ -89,7 +89,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/ConfirmPasswordLabel_textView"
         android:layout_below="@+id/confirmPassord_editText"
-        android:layout_marginTop="19dp"
+        android:layout_marginTop="10dp"
         android:text="@string/reg_UserType" />
 
     <Button
@@ -99,16 +99,8 @@
         android:layout_alignBaseline="@+id/Submit_button"
         android:layout_alignBottom="@+id/Submit_button"
         android:layout_alignLeft="@+id/UserTypeLabel_textView"
+        android:onClick="reset"
         android:text="Reset" />
-
-    <Button
-        android:id="@+id/Submit_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="18dp"
-        android:text="Submit" />
 
     <EditText
         android:id="@+id/Email_editText"
@@ -145,7 +137,51 @@
         android:layout_height="wrap_content"
         android:layout_alignRight="@+id/PasswordLabel_textView"
         android:layout_below="@+id/Email_editText"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         android:text="@string/reg_PhoneLabel" />
+
+    <TextView
+        android:id="@+id/FirstName_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/ConfirmPasswordLabel_textView"
+        android:layout_below="@+id/PhoneNum_editText"
+        android:layout_marginTop="10dp"
+        android:text="@string/reg_FirstNameLabel" />
+
+    <EditText
+        android:id="@+id/FirstName_editText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/FirstName_textView"
+        android:layout_alignBottom="@+id/FirstName_textView"
+        android:layout_alignLeft="@+id/PhoneNum_editText"
+        android:ems="10" />
+
+    <Button
+        android:id="@+id/Submit_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/FirstName_editText"
+        android:onClick="submit"
+        android:text="Submit" />
+
+    <TextView
+        android:id="@+id/LastName_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/Reset_button"
+        android:layout_below="@+id/FirstName_editText"
+        android:layout_marginTop="17dp"
+        android:text="@string/reg_LastNameLabel" />
+
+    <EditText
+        android:id="@+id/LastName_editText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/LastName_textView"
+        android:layout_toRightOf="@+id/FirstName_textView"
+        android:ems="10" />
 
 </RelativeLayout>
